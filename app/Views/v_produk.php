@@ -1,5 +1,5 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
 
-ini halaman keranjang
+ini halaman produk
 <?= $this->endSection() ?>

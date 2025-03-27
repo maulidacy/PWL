@@ -1,8 +1,8 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
 
-<!-- Table with stripped rows -->
-<table class="table datatable">
+             <!-- Table with stripped rows -->
+             <table class="table datatable">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
@@ -52,9 +52,12 @@
               </table>
               <!-- End Table with stripped rows -->
 
-              <?= $this->endSection() ?>
 
 
 ini halaman home<br>
 <a href="/produk">ke halaman produk</a><br>
 <a href="/keranjang">ke halaman keranjang</a>
+
+<?= $this->endSection() ?>
+
+

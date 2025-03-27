@@ -1,5 +1,5 @@
- <!-- ======= Footer ======= -->
- <footer id="footer" class="footer">
+<!-- ======= Footer ======= -->
+<footer id="footer" class="footer">
     <div class="copyright">
       &copy; Copyright <strong><span>Toko</span></strong>. All Rights Reserved
     </div>
