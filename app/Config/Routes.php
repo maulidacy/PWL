@@ -13,3 +13,4 @@ $routes->get('logout', 'AuthController::logout');
 
 $routes->get('produk', 'ProdukControllers::index', ['filter' => 'auth']);
 $routes->get('keranjang', 'KeranjangControllers::index', ['filter' => 'auth']);
+$routes->get('profile', 'Home::profile', ['filter' => 'auth']);

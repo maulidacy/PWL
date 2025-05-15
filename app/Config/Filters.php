@@ -34,7 +34,8 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
-        'auth'          => \App\Filters\Auth::class
+        'auth'          => \App\Filters\Auth::class,
+        'redirect'      => \App\Filters\Redirect::class,
     ];
 
     /**
@@ -93,7 +94,9 @@ class Filters extends BaseFilters
      *
      * @var array<string, list<string>>
      */
-    public array $methods = [];
+    public array $methods = [
+        'post' => ['redirect']
+    ];
 
     /**
      * List of filter aliases that should run on any
