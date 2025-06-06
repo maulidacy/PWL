@@ -10,6 +10,8 @@ class Home extends BaseController
 
     public function __construct()
     {
+        helper('form');
+        helper('number');
         $this->product = new ProductModel();
     }
 
@@ -24,6 +26,13 @@ class Home extends BaseController
     public function profile(): string
     {
         $session = session();
+
+        // Test session persistence
+        $session->set('test_key', 'test_value');
+        $testValue = $session->get('test_key');
+
+        echo 'Test session value: ' . $testValue . '<br>';
+
         $data = [
             'username' => $session->get('username'),
             'role' => $session->get('role'),

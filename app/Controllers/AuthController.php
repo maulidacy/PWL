@@ -22,21 +22,23 @@ class AuthController extends BaseController
                 'username' => 'required|min_length[6]',
                 'password' => 'required|min_length[7]|numeric',
             ];
-    
+
             if ($this->validate($rules)) {
                 $username = $this->request->getVar('username');
                 $password = $this->request->getVar('password');
-    
+
                 $dataUser = $this->user->where(['username' => $username])->first(); //pasw 1234567
-    
+
                 if ($dataUser) {
                     if (password_verify($password, $dataUser['password'])) {
+                        date_default_timezone_set('Asia/Jakarta');
                         session()->set([
                             'username' => $dataUser['username'],
                             'role' => $dataUser['role'],
-                            'isLoggedIn' => TRUE
+                            'isLoggedIn' => TRUE,
+                            'login_time' => date('Y-m-d H:i:s')
                         ]);
-    
+
                         return redirect()->to(base_url('/'));
                     } else {
                         session()->setFlashdata('failed', 'Kombinasi Username & Password Salah');
@@ -51,7 +53,7 @@ class AuthController extends BaseController
                 return redirect()->back();
             }
         }
-    
+
         return view('v_login');
     }
 public function logout()
