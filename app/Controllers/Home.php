@@ -34,17 +34,15 @@ class Home extends BaseController
     public function profile(): string
     {
         $session = session();
+        $username = $session->get('username');
 
-        // Test session persistence
-        $session->set('test_key', 'test_value');
-        $testValue = $session->get('test_key');
-
-        echo 'Test session value: ' . $testValue . '<br>';
+        $userModel = new \App\Models\UserModel();
+        $user = $userModel->where('username', $username)->first();
 
         $data = [
-            'username' => $session->get('username'),
+            'username' => $username,
             'role' => $session->get('role'),
-            'email' => $session->get('email'),
+            'email' => $user ? $user['email'] : '',
             'login_time' => $session->get('login_time'),
             'isLoggedIn' => $session->get('isLoggedIn'),
         ];
