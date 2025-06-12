@@ -23,7 +23,7 @@ if (session()->getFlashData('success')) {
             ?>
             <div class="card">
                 <div class="card-body">
-                    <img src="<?php echo base_url() . "img/" . $item['foto'] ?>" alt="..." width="300px">
+                    <img src="<?php echo base_url() . "img/" . $item['foto'] ?>" alt="..." width="300px" loading="lazy">
                     <h5 class="card-title"><?php echo $item['nama'] ?><br><?php echo number_to_currency($item['harga'], 'IDR') ?></h5>
                     <button type="submit" class="btn btn-info rounded-pill">Beli</button>
                 </div>
@@ -33,4 +33,9 @@ if (session()->getFlashData('success')) {
     <?php endforeach ?>
 </div>
 <!-- End Table with stripped rows -->
+
+<div class="mt-3">
+    <?= $pager->links() ?>
+</div>
+
 <?= $this->endSection() ?>

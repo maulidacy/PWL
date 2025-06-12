@@ -59,7 +59,7 @@ class Filters extends BaseFilters
         'after' => [
             'pagecache',   // Web Page Caching
             'performance', // Performance Metrics
-            'toolbar',     // Debug Toolbar
+            // 'toolbar',     // Debug Toolbar (disabled to improve performance)
         ],
     ];
 
@@ -95,7 +95,7 @@ class Filters extends BaseFilters
      * @var array<string, list<string>>
      */
     public array $methods = [
-        'post' => ['redirect']
+        'POST' => ['redirect']
     ];
 
     /**

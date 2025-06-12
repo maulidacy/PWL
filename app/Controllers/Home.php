@@ -17,8 +17,16 @@ class Home extends BaseController
 
     public function index(): string
     {
-        $products = $this->product->findAll();
-        $data['products'] = $products;
+        $perPage = 10;
+        $currentPage = $this->request->getVar('page') ?? 1;
+
+        $products = $this->product->paginate($perPage, 'default', $currentPage);
+        $pager = $this->product->pager;
+
+        $data = [
+            'products' => $products,
+            'pager' => $pager
+        ];
 
         return view('v_home', $data);
     }

@@ -106,7 +106,7 @@ class ProdukController extends BaseController
         $dompdf->loadHtml($html);
 
         // (optional) setup the paper size and orientation
-        $dompdf->setPaper('A4', 'potrait');
+        $dompdf->setPaper('A4', 'portrait');
 
         // render html as PDF
         $dompdf->render();
