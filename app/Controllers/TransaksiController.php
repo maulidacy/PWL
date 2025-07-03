@@ -74,10 +74,36 @@ class TransaksiController extends BaseController
         return redirect()->to(base_url('keranjang'));
     }
 
+    private function calculatePpn($totalHarga)
+    {
+        return $totalHarga * 0.11;
+    }
+
+    private function calculateBiayaAdmin($totalHarga)
+    {
+        if ($totalHarga <= 20000000) {
+            return $totalHarga * 0.006;
+        } elseif ($totalHarga <= 40000000) {
+            return $totalHarga * 0.008;
+        } elseif ($totalHarga > 40000000) {
+            return $totalHarga * 0.01;
+        }
+        return 0;
+    }
+
     public function checkout()
     {
+        $totalHarga = $this->cart->total();
+        $ppn = $this->calculatePpn($totalHarga);
+        $biayaAdmin = $this->calculateBiayaAdmin($totalHarga);
+
+        $ongkir = $this->request->getPost('ongkir') ?? 0;
+
         $data['items'] = $this->cart->contents();
-        $data['total'] = $this->cart->total();
+        $data['total'] = $totalHarga;
+        $data['ppn'] = $ppn;
+        $data['biaya_admin'] = $biayaAdmin;
+        $data['ongkir'] = $ongkir;
 
         return view('v_checkout', $data);
     }
@@ -95,9 +121,15 @@ class TransaksiController extends BaseController
         $db->transStart();
 
         try {
+            $totalHarga = $this->cart->total();
+            $ppn = $this->calculatePpn($totalHarga);
+            $biayaAdmin = $this->calculateBiayaAdmin($totalHarga);
+
             $transactionData = [
                 'username' => session()->get('username'),
-                'total_harga' => $this->cart->total(),
+                'total_harga' => $totalHarga,
+                'ppn' => $ppn,
+                'biaya_admin' => $biayaAdmin,
                 'alamat' => $this->request->getPost('alamat'),
                 'ongkir' => $this->request->getPost('ongkir'),
                 'status' => 'pending',

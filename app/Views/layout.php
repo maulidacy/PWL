@@ -54,7 +54,7 @@ if (uri_string() != "") {
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Data Tables</h1>
+      <h1><?= isset($pageTitle) ? $pageTitle : $hlm ?></h1>
       <nav>
 
         <ol class="breadcrumb">
@@ -62,7 +62,7 @@ if (uri_string() != "") {
           <?php
           if ($hlm != "Home") {
           ?>
-            <li class="breadcrumb-item"><?php echo $hlm ?></li>
+            <li class="breadcrumb-item"><?= isset($pageTitle) ? $pageTitle : $hlm ?></li>
           <?php
           }
           ?>

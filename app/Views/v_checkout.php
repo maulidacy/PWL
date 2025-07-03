@@ -24,7 +24,7 @@
         </div>
         <div class="col-12">
             <label for="ongkir" class="form-label">Ongkir</label>
-            <input type="text" class="form-control" id="ongkir" name="ongkir" readonly>
+            <input type="text" class="form-control" id="ongkir" name="ongkir" readonly value="<?= esc($ongkir ?? 0) ?>">
         </div>
     </div>
     <div class="col-lg-6">
@@ -58,13 +58,28 @@
                     ?>
                     <tr>
                         <td colspan="2"></td>
-                        <td>Subtotal</td>
-                        <td><?php echo number_to_currency($total, 'IDR') ?></td>
+                        <td><strong>Subtotal</strong></td>
+                        <td><strong><?php echo number_to_currency($total, 'IDR') ?></strong></td>
                     </tr>
                     <tr>
                         <td colspan="2"></td>
-                        <td>Total</td>
-                        <td><span id="total"><?php echo number_to_currency($total, 'IDR') ?></span></td>
+                        <td>PPN (11%)</td>
+                        <td><?php echo number_to_currency($ppn ?? 0, 'IDR') ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>Biaya Admin</td>
+                        <td><?php echo number_to_currency($biaya_admin ?? 0, 'IDR') ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>Ongkir</td>
+                        <td><span id="ongkir_display"><?= number_to_currency($ongkir ?? 0, 'IDR', 0) ?></span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td><strong>Grand Total</strong></td>
+                        <td><strong><span id="grand_total">IDR 0</span></strong></td>
                     </tr>
                 </tbody>
             </table>
@@ -80,8 +95,10 @@
 <?= $this->section('script') ?>
 <script>
     $(document).ready(function() {
-        var ongkir = 0;
-        var total = 0;
+        var ongkir = <?= $ongkir ?? 0 ?>;
+        var total = <?= $total ?>;
+        var ppn = <?= $ppn ?? 0 ?>;
+        var biayaAdmin = <?= $biaya_admin ?? 0 ?>;
         hitungTotal();
 
         $('#kelurahan').select2({
@@ -137,15 +154,17 @@
 
         $("#layanan").on('change', function() {
             ongkir = parseInt($(this).val());
+            $("#ongkir_display").html(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(ongkir));
             hitungTotal();
         });
 
         function hitungTotal() {
-            total = ongkir + <?= $total ?>;
+            var grandTotal = total + ppn + biayaAdmin + ongkir;
 
             $("#ongkir").val(ongkir);
             $("#total").html("IDR " + total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
-            $("#total_harga").val(total);
+            $("#total_harga").val(grandTotal);
+            $("#grand_total").html("IDR " + grandTotal.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
         }
     });
 </script>
